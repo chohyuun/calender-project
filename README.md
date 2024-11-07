@@ -1,6 +1,6 @@
 # 일정 관리 앱 만들기
 
-스파르타 코딩 클럽 내일배움캠프 개인 과제 일정 관리 앱 만들기입니다.
+스파르타 코딩 클럽 내일배움캠프 개인 과제 일정 관리 API 만들기입니다.
 
 ## 사용 기술
 
@@ -24,7 +24,7 @@ IDE : IntelliJ
 | 일정 추가    | POST   | /schedules      | {<br/>"id" : "int", <br/>"name" : "string(30)", <br/>"password" : "string(50)", <br/>"create_date" : "date",<br/>"modified_date" : "date", <br/>"contents" : "string(300)",<br/>"title" : "string(100)"<br/>} | 200<br/>{<br/>"message" : "일정 등록 성공"<br/>}                                                                                                                                                                                                    |
 | 전체 일정 조회 | GET    | /schedules      |                                                                                                                                                                                                               | 200<br/>{<br/>"id" : "int", <br/>"name" : "string(30)", <br/>"create_date" : "date",<br/>"modified_date" : "date", <br/>"contents" : "string(300)",<br/>"title" : "string(100)"<br/>}                                                         |
 | 일정 조회    | GET    | /schedules/{id} |                                                                                                                                                                                                               | 200<br/>{<br/>"id" : "int", <br/>"name" : "string(30)", <br/>"create_date" : "date",<br/>"modified_date" : "date", <br/>"contents" : "string(300)",<br/>"title" : "string(100)"<br/>}                                                         |
-| 일정 수정    | PUT    | /schedules/{id} | {<br/>"modified_date" : "date", <br/>"password" : "string", <br/>"contents" : "string(300)",<br/>"title" : "string(100)"<br/>}                                                                                | 200<br/>{<br/>"id" : "int", <br/>"name" : "string(30)", <br/>"create_date" : "date",<br/>"modified_date" : "date", <br/>"contents" : "string(300)",<br/>"title" : "string(100)"<br/>}<br/><br/>403<br/>{<br/>"message" : "비밀번호가 틀렸습니다."<br/>} |
+| 일정 수정    | PATCH  | /schedules/{id} | {<br/>"modified_date" : "date", <br/>"password" : "string", <br/>"contents" : "string(300)",<br/>"title" : "string(100)"<br/>}                                                                                | 200<br/>{<br/>"id" : "int", <br/>"name" : "string(30)", <br/>"create_date" : "date",<br/>"modified_date" : "date", <br/>"contents" : "string(300)",<br/>"title" : "string(100)"<br/>}<br/><br/>403<br/>{<br/>"message" : "비밀번호가 틀렸습니다."<br/>} |
 | 일정 삭제    | DELETE | /schedules/{id} | {<br/>"password" : "string(50)"<br/>}                                                                                                                                                                         | 200<br/>{<br/>"message" : "일정 삭제 성공"<br/>}<br/><br/>403<br/>{<br/>"message" : "비밀번호가 틀렸습니다."<br/>}                                                                                                                                            |
 
 ### 공통 Error 메시지
