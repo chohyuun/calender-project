@@ -2,10 +2,7 @@ package com.emaple.calenderproject.controller;
 
 import com.emaple.calenderproject.dto.ScheduleRequestDto;
 import com.emaple.calenderproject.dto.ScheduleResponseDto;
-import com.emaple.calenderproject.entity.Schedule;
 import com.emaple.calenderproject.service.ScheduleService;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

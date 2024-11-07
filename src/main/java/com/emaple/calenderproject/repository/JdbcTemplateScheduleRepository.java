@@ -81,7 +81,6 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     public void updateSchedule(Long id, String name, String title, String contents, String modifiedDate, String password) {
         List<Schedule> result =
                 jdbcTemplate.query("select * from schedule where id=?", scheduleRowMapperV2(), id);
-        System.out.println(name);
 
         if (password != null && Objects.equals(password, result.get(0).getPassword())) {
 

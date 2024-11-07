@@ -1,7 +1,6 @@
 package com.emaple.calenderproject.dto;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class ScheduleRequestDto {
