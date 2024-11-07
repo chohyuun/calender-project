@@ -1,3 +1,4 @@
+use schedule;
 -- Create(테이블 생성)
 create table schedule(
     schedule_id int not null auto_increment primary key,
@@ -5,6 +6,7 @@ create table schedule(
     user_password varchar(50) not null, -- user table 생성시 제거 및 이름 변경
     create_date datetime not null,
     modified_date datetime not null,
+    title varchar(100),
     contents varchar(300)
 );
 
