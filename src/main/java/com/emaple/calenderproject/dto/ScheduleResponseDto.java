@@ -9,10 +9,10 @@ import lombok.Getter;
 public class ScheduleResponseDto {
     private Long id;
     private String name;
-    private String createDate;
-    private String modifiedDate;
     private String title;
     private String contents;
+    private String createDate;
+    private String modifiedDate;
 
     public ScheduleResponseDto(Schedule schedule) {
         this.id = schedule.getId();
