@@ -26,6 +26,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    // 현재 일자 메소드
     private Timestamp NowDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
