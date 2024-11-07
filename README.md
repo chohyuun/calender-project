@@ -43,7 +43,8 @@ IDE : IntelliJ
         - 400 Bad Request { "message" : "없는 일정 입니다." }
 
 ## ERD
-<img width="353" alt="스크린샷 2024-11-08 오전 7 48 31" src="https://github.com/user-attachments/assets/54872cb4-3d33-4672-8104-4c4517ef28eb">
+<img width="351" alt="스크린샷 2024-11-08 오전 8 07 32" src="https://github.com/user-attachments/assets/9d8838d9-a8d4-403e-91dc-e7f790e9cd21">
+
 
 ## 추가 할 사항
 - 유저 테이블 추가 후 외래키를 이용한 연결
