@@ -3,6 +3,7 @@ package com.emaple.calenderproject.dto;
 import com.emaple.calenderproject.entity.Schedule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.HttpStatusCode;
 
 @Getter
 @AllArgsConstructor
@@ -22,4 +23,5 @@ public class ScheduleResponseDto {
         this.createDate = schedule.getCreateDate();
         this.modifiedDate = schedule.getModifiedDate();
     }
+
 }

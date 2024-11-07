@@ -28,7 +28,7 @@ public class SchedulerController {
         return new ResponseEntity<>(scheduleService.createSchedule(requestDto), HttpStatus.CREATED);
     }
 
-    // 입력값은 modified_date, name, modifiedDate&name
+    // query String: modified_date, name, modifiedDate&name
     @GetMapping
     public List<ScheduleResponseDto> getAllSchedules(@RequestParam(defaultValue = "modified_date") String sort) {
         return scheduleService.findAllSchedules(sort);
@@ -42,7 +42,7 @@ public class SchedulerController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
-        return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto.getName(), requestDto.getTitle(), requestDto.getContents(), requestDto.getModifiedDate()), HttpStatus.OK);
+        return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto.getName(), requestDto.getTitle(), requestDto.getContents(), requestDto.getModifiedDate(), requestDto.getPassword()), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

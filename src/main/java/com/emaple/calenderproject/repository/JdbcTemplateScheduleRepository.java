@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.sql.Timestamp;
@@ -27,14 +26,19 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    @Override
-    public ScheduleResponseDto createSchedule(Schedule schedule) {
+    private Timestamp NowDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate);
         Date now = new Date();
         String dateString = dateFormat.format(now);
         Timestamp dateParse = Timestamp.valueOf(dateString);
+
+        return dateParse;
+    }
+
+    @Override
+    public ScheduleResponseDto createSchedule(Schedule schedule) {
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate);
 
         insert.withTableName("schedule").usingGeneratedKeyColumns("id");
 
@@ -44,8 +48,8 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
         parameters.put("password", schedule.getPassword());
         parameters.put("title", schedule.getTitle());
         parameters.put("contents", schedule.getContents());
-        parameters.put("createDate", dateParse);
-        parameters.put("modifiedDate", dateParse);
+        parameters.put("createDate", NowDate());
+        parameters.put("modifiedDate", NowDate());
 
         Number id = insert.executeAndReturnKey(new MapSqlParameterSource(parameters));
 
@@ -58,9 +62,9 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
             return jdbcTemplate.query("select * from schedule order by modified_date desc", scheduleRowMapper());
         } else if (Objects.equals(sortSchedule, "name")) {
             return jdbcTemplate.query("select * from schedule order by name desc", scheduleRowMapper());
-        } else if(Objects.equals(sortSchedule, "modified_date&name") || Objects.equals(sortSchedule, "name&modified_date")) {
+        } else if (Objects.equals(sortSchedule, "modified_date&name") || Objects.equals(sortSchedule, "name&modified_date")) {
             return jdbcTemplate.query("select * from schedule order by name, modified_date desc", scheduleRowMapper());
-        }else {
+        } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No schedule found");
 
         }
@@ -74,11 +78,24 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public Schedule updateSchedule(Schedule schedule) {
-        jdbcTemplate.update("update schedule set modified_date=dateformat(now(), 'YYYY-MM-dd %H:mm:ss'), user_name=?, contents=? where schedule_id=?",
-                schedule.getModifiedDate(), schedule.getContents(), schedule.getId());
+    public void updateSchedule(Long id, String name, String title, String contents, String modifiedDate, String password) {
+        List<Schedule> result =
+                jdbcTemplate.query("select * from schedule where id=?", scheduleRowMapperV2(), id);
+        System.out.println(name);
 
-        return null;
+        if (password != null && Objects.equals(password, result.get(0).getPassword())) {
+
+            Map<String, Object> parameters = new HashMap<>();
+
+            parameters.put("name", (name == null || name.isEmpty()) ? result.get(0).getName() : name);
+            parameters.put("title", (title == null || title.isEmpty()) ? result.get(0).getTitle() : title);
+            parameters.put("contents", (contents == null || contents.isEmpty()) ? result.get(0).getContents() : contents);
+
+
+            jdbcTemplate.update("update schedule set modified_date=?, name=?, title=?, contents=? where id=?", NowDate(), name, title, contents, id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "wrong password");
+        }
     }
 
     @Override

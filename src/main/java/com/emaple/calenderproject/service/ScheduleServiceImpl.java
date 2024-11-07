@@ -4,7 +4,9 @@ import com.emaple.calenderproject.dto.ScheduleRequestDto;
 import com.emaple.calenderproject.dto.ScheduleResponseDto;
 import com.emaple.calenderproject.entity.Schedule;
 import com.emaple.calenderproject.repository.ScheduleRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -36,8 +38,16 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public ScheduleResponseDto updateSchedule(Long id, String name, String title, String contents, String modifiedDate) {
-        return null;
+    public ScheduleResponseDto updateSchedule(Long id, String name, String title, String contents, String modifiedDate, String password) {
+        if(password == null || password.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The password are required values.");
+        }else if((name == null || name.isEmpty()) && (title == null || title.isEmpty()) && (contents == null || contents.isEmpty())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No value changed.");
+        }
+
+        scheduleRepository.updateSchedule(id, name, title, contents, modifiedDate, password);
+
+        return scheduleRepository.findScheduleById(id);
     }
 
     @Override

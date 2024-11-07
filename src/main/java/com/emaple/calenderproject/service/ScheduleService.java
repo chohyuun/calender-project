@@ -11,6 +11,6 @@ public interface ScheduleService {
     ScheduleResponseDto createSchedule(ScheduleRequestDto scheduleRequestDto);
     List<ScheduleResponseDto> findAllSchedules(String sortType);
     ScheduleResponseDto findScheduleById(Long id);
-    ScheduleResponseDto updateSchedule(Long id, String name, String title, String contents, String modifiedDate);
+    ScheduleResponseDto updateSchedule(Long id, String name, String title, String contents, String modifiedDate, String password);
     void deleteSchedule(Long id, String password);
 }
